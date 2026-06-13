@@ -171,7 +171,9 @@ Example:
 
 Increase instances:
     App Instance 1
+    |
     App Instance 2
+    |
     App Instance 3
 
 ---
