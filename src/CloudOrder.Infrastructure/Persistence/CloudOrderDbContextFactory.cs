@@ -1,0 +1,38 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
+
+namespace CloudOrder.Infrastructure.Persistence
+{
+    public class CloudOrderDbContextFactory : IDesignTimeDbContextFactory<CloudOrderDbContext>
+    {
+        public CloudOrderDbContext CreateDbContext(string[] args)
+        {
+            var path = Path.Combine(
+             Directory.GetCurrentDirectory(),
+             "../CloudOrder.API");
+
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(path)
+                .AddJsonFile(
+                    "appsettings.json",
+                    optional: false)
+                .Build();
+
+
+            var connectionString =
+                configuration.GetConnectionString(
+                    "DefaultConnection");
+
+
+            var optionsBuilder =
+                new DbContextOptionsBuilder<CloudOrderDbContext>();
+
+            optionsBuilder.UseSqlServer(connectionString);
+
+
+            return new CloudOrderDbContext(
+                optionsBuilder.Options);
+        }
+    }
+}
