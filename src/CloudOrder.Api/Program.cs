@@ -1,4 +1,6 @@
+using CloudOrder.Application;
 using CloudOrder.Infrastructure.Persistence;
+using CloudOrder.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,16 +13,25 @@ builder.Services.AddDbContext<CloudOrderDbContext>(
     options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection")));  
-
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddControllers();
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider
+        .GetRequiredService<CloudOrderDbContext>();
+
+    await DataSeeder.SeedAsync(dbContext);
+}
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.MapControllers();
 app.UseHttpsRedirection();
 
 var summaries = new[]

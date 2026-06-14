@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CloudOrder.Domain\CloudOrder.Domain.csproj" />
+    <ProjectReference Include="..\CloudOrder.Infrastructure\CloudOrder.Infrastructure.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
