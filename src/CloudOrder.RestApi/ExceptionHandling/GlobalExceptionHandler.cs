@@ -17,7 +17,7 @@ namespace CloudOrder.RestApi.ExceptionHandling
         {
             _logger.LogError(exception, "An unhandled exception occurred.");
 
-            var problem= exception switch
+            var problem = exception switch
             {
                 NotFoundException => new ProblemDetails
                 {
@@ -25,7 +25,7 @@ namespace CloudOrder.RestApi.ExceptionHandling
                     Detail = exception.Message,
                     Status = StatusCodes.Status404NotFound
                 },
-                BusinessException=> new ProblemDetails
+                BusinessException => new ProblemDetails
                 {
                     Title = "Business Rule Violation",
                     Detail = exception.Message,

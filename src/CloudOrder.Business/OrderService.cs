@@ -14,14 +14,14 @@ public class OrderService : IOrderService
     }
     public async Task<List<OrderResponseDto>> GetOrdersAsync()
     {
-        var result= await _orderRepository.GetOrdersAsync();
+        var result = await _orderRepository.GetOrdersAsync();
         return result.ToDto();
 
     }
 
     public async Task<OrderResponseDto> GetOrderAysnc(Guid orderId)
     {
-        var result= await _orderRepository.GetOrderByIdAsync(orderId);
+        var result = await _orderRepository.GetOrderByIdAsync(orderId);
         return result.ToDto();
     }
     public Task CreateOrderAsync(Order order)
