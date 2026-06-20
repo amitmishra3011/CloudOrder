@@ -1,7 +1,7 @@
 using CloudOrder.Worker;
 
-var builder = Host.CreateApplicationBuilder(args);
+IHostBuilder builder = Host.CreateApplicationBuilder(args);
 builder.Services.AddHostedService<Worker>();
 
-var host = builder.Build();
+IHost host = builder.Build();
 host.Run();

@@ -35,7 +35,7 @@ jobs:
         shell: powershell
 
       - name: "Format check"
-        run: dotnet format --verify-no-changes --severity info || exit 1
+        run: dotnet format --verify-no-changes --severity info
 
       - name: "Build (treat warnings as errors)"
         run: dotnet build CloudOrder.sln --no-restore --configuration Release -p:WarningsAsErrors=true

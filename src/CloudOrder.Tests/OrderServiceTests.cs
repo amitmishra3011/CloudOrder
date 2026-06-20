@@ -11,7 +11,7 @@ public sealed class OrderServiceTests
     [TestMethod]
     public async Task GetOrdersAsync_ReturnsOrdersFromRepository()
     {
-        var expectedOrders = new List<Order>
+        List<Order> expectedOrders = new()
         {
             new()
             {
@@ -22,14 +22,14 @@ public sealed class OrderServiceTests
             }
         };
 
-        var repository = new Mock<IOrderRepository>();
+        Mock<IOrderRepository> repository = new();
         repository
             .Setup(repo => repo.GetOrdersAsync())
             .ReturnsAsync(expectedOrders);
 
-        var service = new OrderService(repository.Object);
+        OrderService service = new(repository.Object);
 
-        var actualOrders = await service.GetOrdersAsync();
+        List<Order> actualOrders = await service.GetOrdersAsync();
 
         CollectionAssert.AreEqual(expectedOrders, actualOrders);
         repository.Verify(repo => repo.GetOrdersAsync(), Times.Once);
