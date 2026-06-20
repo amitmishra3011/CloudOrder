@@ -11,7 +11,8 @@ namespace CloudOrder.RestApi.ExceptionHandling
         {
             _logger = logger;
         }
-        public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
+
+        public async Task<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
             _logger.LogError(exception, "An unhandled exception occurred.");
 
@@ -36,6 +37,7 @@ namespace CloudOrder.RestApi.ExceptionHandling
                     Status = StatusCodes.Status500InternalServerError
                 }
             };
+
             httpContext.Response.StatusCode = problem.Status ?? StatusCodes.Status500InternalServerError;
             await httpContext.Response.WriteAsJsonAsync(problem, cancellationToken);
             return true;
