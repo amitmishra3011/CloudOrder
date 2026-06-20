@@ -22,20 +22,11 @@ jobs:
       - name: "Restore"
         run: dotnet restore CloudOrder.sln
 
-      - name: "Install dotnet-format"
-        run: dotnet tool install -g dotnet-format || true
-
-      - name: "Add dotnet tools to PATH"
-        if: runner.os != 'Windows'
-        run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
-
-      - name: "Add dotnet tools to PATH (Windows)"
-        if: runner.os == 'Windows'
-        run: echo "$env:USERPROFILE\.dotnet\tools" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-        shell: powershell
+      - name: "Restore dotnet local tools"
+        run: dotnet tool restore
 
       - name: "Format check"
-        run: dotnet format --verify-no-changes --severity info
+        run: dotnet tool run dotnet-format --check CloudOrder.sln -s info
 
       - name: "Build (treat warnings as errors)"
         run: dotnet build CloudOrder.sln --no-restore --configuration Release -p:WarningsAsErrors=true

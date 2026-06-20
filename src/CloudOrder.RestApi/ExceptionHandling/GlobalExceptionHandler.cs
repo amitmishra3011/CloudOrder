@@ -1,8 +1,6 @@
 using CloudOrder.Entities.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace CloudOrder.RestApi.ExceptionHandling
 {
@@ -17,7 +15,7 @@ namespace CloudOrder.RestApi.ExceptionHandling
         {
             _logger.LogError(exception, "An unhandled exception occurred.");
 
-            var problem = exception switch
+            ProblemDetails? problem = exception switch
             {
                 NotFoundException => new ProblemDetails
                 {
@@ -42,5 +40,7 @@ namespace CloudOrder.RestApi.ExceptionHandling
             await httpContext.Response.WriteAsJsonAsync(problem, cancellationToken);
             return true;
         }
+
+        // Removed duplicate unimplemented overload. The async implementation above is the correct handler.
     }
 }

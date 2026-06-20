@@ -1,7 +1,12 @@
 #!/bin/sh
 # Local pre-commit hook (POSIX shell). Make executable: chmod +x .githooks/pre-commit
 solution="CloudOrder.sln"
-echo "Running pre-commit checks: restore, build, and tests..."
+echo "Running pre-commit checks: restore, format, build, and tests..."
+dotnet tool restore || { echo "dotnet tool restore failed"; exit 1; }
+dotnet tool run dotnet-format --check "$solution" -s info || {
+  echo "dotnet-format found issues. Run 'dotnet tool run dotnet-format' to fix and re-commit."
+  exit 1
+}
 dotnet restore "$solution" || { echo "dotnet restore failed"; exit 1; }
 dotnet build "$solution" --no-restore || { echo "Build failed"; exit 1; }
 dotnet test "$solution" --no-build || { echo "Tests failed"; exit 1; }

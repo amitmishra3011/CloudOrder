@@ -73,6 +73,7 @@ This guide defines the default engineering rules for CloudOrder. Use it when add
 - A CI workflow runs on push and pull request to build and test the solution. Do not merge PRs with failing checks.
 - Optionally enable the local pre-commit hooks included in the repository to run checks automatically before each commit:
   - Set Git to use the provided hooks folder: `git config core.hooksPath .githooks`
+  - Restore local dotnet tools after cloning (once): `dotnet tool restore`
   - Make the hooks executable on Unix/macOS: `chmod +x .githooks/pre-commit`
 
 These rules help keep the main branch green and avoid regressions.
