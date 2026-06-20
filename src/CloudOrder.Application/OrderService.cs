@@ -1,5 +1,5 @@
-﻿using CloudOrder.Domain.Entities;
-using CloudOrder.Infrastructure.Repositories;
+using CloudOrder.Domain.Entities;
+using CloudOrder.Business.Repositories;
 
 namespace CloudOrder.Application;
 
@@ -10,7 +10,7 @@ public class OrderService : IOrderService
     {
         _orderRepository = orderRepository;
     }
-    public async Task<List<Order>> GetOrdersAsync()
+    public async Task<List<OrderResponseDto>> GetOrdersAsync()
     {
         return await _orderRepository.GetOrdersAsync();
     }

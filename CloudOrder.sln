@@ -1,19 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31903.59
+# Visual Studio Version 18
+VisualStudioVersion = 18.7.11911.148 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72D-47B6-A68D-7590B98EB39B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudOrder.Api", "src\CloudOrder.Api\CloudOrder.Api.csproj", "{D9FBC5D3-E1B3-4B40-9D2B-9FD3CF2FF19F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudOrder.RestApi", "src\CloudOrder.RestApi\CloudOrder.RestApi.csproj", "{D9FBC5D3-E1B3-4B40-9D2B-9FD3CF2FF19F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudOrder.Application", "src\CloudOrder.Application\CloudOrder.Application.csproj", "{3864CE5C-1485-498D-A190-3892B28CCC2A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudOrder.Business", "src\CloudOrder.Business\CloudOrder.Business.csproj", "{3864CE5C-1485-498D-A190-3892B28CCC2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudOrder.Infrastructure", "src\CloudOrder.Infrastructure\CloudOrder.Infrastructure.csproj", "{6208CBD6-ED36-4DDA-A4F1-A14B1EDADB1E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudOrder.EFInfrastructure", "src\CloudOrder.EFInfrastructure\CloudOrder.EFInfrastructure.csproj", "{6208CBD6-ED36-4DDA-A4F1-A14B1EDADB1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudOrder.Domain", "src\CloudOrder.Domain\CloudOrder.Domain.csproj", "{8EC66D2F-1252-4349-86B4-2400CB5A3A2E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudOrder.Entities", "src\CloudOrder.Entities\CloudOrder.Entities.csproj", "{8EC66D2F-1252-4349-86B4-2400CB5A3A2E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudOrder.Worker", "src\CloudOrder.Worker\CloudOrder.Worker.csproj", "{A40C42A7-59D1-49E6-8E6E-3432283086C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudOrder.Tests", "src\CloudOrder.Tests\CloudOrder.Tests.csproj", "{6F5F1866-E869-439C-B815-FA5AA68BA894}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,6 +87,18 @@ Global
 		{A40C42A7-59D1-49E6-8E6E-3432283086C0}.Release|x64.Build.0 = Release|Any CPU
 		{A40C42A7-59D1-49E6-8E6E-3432283086C0}.Release|x86.ActiveCfg = Release|Any CPU
 		{A40C42A7-59D1-49E6-8E6E-3432283086C0}.Release|x86.Build.0 = Release|Any CPU
+		{6F5F1866-E869-439C-B815-FA5AA68BA894}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F5F1866-E869-439C-B815-FA5AA68BA894}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F5F1866-E869-439C-B815-FA5AA68BA894}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6F5F1866-E869-439C-B815-FA5AA68BA894}.Debug|x64.Build.0 = Debug|Any CPU
+		{6F5F1866-E869-439C-B815-FA5AA68BA894}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6F5F1866-E869-439C-B815-FA5AA68BA894}.Debug|x86.Build.0 = Debug|Any CPU
+		{6F5F1866-E869-439C-B815-FA5AA68BA894}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F5F1866-E869-439C-B815-FA5AA68BA894}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F5F1866-E869-439C-B815-FA5AA68BA894}.Release|x64.ActiveCfg = Release|Any CPU
+		{6F5F1866-E869-439C-B815-FA5AA68BA894}.Release|x64.Build.0 = Release|Any CPU
+		{6F5F1866-E869-439C-B815-FA5AA68BA894}.Release|x86.ActiveCfg = Release|Any CPU
+		{6F5F1866-E869-439C-B815-FA5AA68BA894}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,5 +109,6 @@ Global
 		{6208CBD6-ED36-4DDA-A4F1-A14B1EDADB1E} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{8EC66D2F-1252-4349-86B4-2400CB5A3A2E} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{A40C42A7-59D1-49E6-8E6E-3432283086C0} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+		{6F5F1866-E869-439C-B815-FA5AA68BA894} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 	EndGlobalSection
 EndGlobal

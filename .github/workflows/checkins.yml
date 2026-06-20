@@ -1,0 +1,37 @@
+name: Checkins
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v4
+
+      - name: 'Setup .NET 10'
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: 'Restore'
+        run: dotnet restore CloudOrder.sln
+
+      - name: 'Install dotnet-format'
+        run: |
+          dotnet tool install -g dotnet-format || true
+          echo "::add-path::${HOME}/.dotnet/tools"
+
+      - name: 'Format check'
+        run: dotnet format --verify-no-changes --severity info || exit 1
+
+      - name: 'Build (treat warnings as errors)'
+        run: dotnet build CloudOrder.sln --no-restore --configuration Release -p:WarningsAsErrors=true
+
+      - name: 'Test'
+        run: dotnet test CloudOrder.sln --no-build --configuration Release --verbosity normal
