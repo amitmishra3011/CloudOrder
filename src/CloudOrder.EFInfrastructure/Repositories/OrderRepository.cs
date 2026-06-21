@@ -1,9 +1,9 @@
+using CloudOrder.Business.DTOs.Orders;
 using CloudOrder.Business.Repositories;
+using CloudOrder.EFInfrastructure.Persistence;
 using CloudOrder.Entities.Entities;
 using CloudOrder.Entities.Exceptions;
-using CloudOrder.EFInfrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using CloudOrder.Business.DTOs.Orders;
 
 namespace CloudOrder.EFInfrastructure.Repositories
 {
@@ -24,6 +24,6 @@ namespace CloudOrder.EFInfrastructure.Repositories
             // C#
             return (await _context.Orders.FindAsync(orderId))
                    ?? throw new NotFoundException($"Order {orderId} not found.");// C#
-        }       
+        }
     }
 }

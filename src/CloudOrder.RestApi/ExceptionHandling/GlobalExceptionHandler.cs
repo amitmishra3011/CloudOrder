@@ -1,3 +1,6 @@
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using CloudOrder.Entities.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
@@ -13,11 +16,12 @@ namespace CloudOrder.RestApi.ExceptionHandling
         {
             _logger = logger;
         }
+
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
             _logger.LogError(exception, "An unhandled exception occurred.");
 
-            var problem= exception switch
+            ProblemDetails? problem = exception switch
             {
                 NotFoundException => new ProblemDetails
                 {
@@ -25,7 +29,7 @@ namespace CloudOrder.RestApi.ExceptionHandling
                     Detail = exception.Message,
                     Status = StatusCodes.Status404NotFound
                 },
-                BusinessException=> new ProblemDetails
+                BusinessException => new ProblemDetails
                 {
                     Title = "Business Rule Violation",
                     Detail = exception.Message,
@@ -38,6 +42,7 @@ namespace CloudOrder.RestApi.ExceptionHandling
                     Status = StatusCodes.Status500InternalServerError
                 }
             };
+
             httpContext.Response.StatusCode = problem.Status ?? StatusCodes.Status500InternalServerError;
             await httpContext.Response.WriteAsJsonAsync(problem, cancellationToken);
             return true;

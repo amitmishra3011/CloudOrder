@@ -1,5 +1,5 @@
-using Microsoft.EntityFrameworkCore;
 using CloudOrder.Entities.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CloudOrder.EFInfrastructure.Persistence
 {

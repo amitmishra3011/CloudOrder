@@ -10,7 +10,7 @@ namespace CloudOrder.Entities.Exceptions
     {
         public BusinessException(string message) : base(message)
         {
-            
+
         }
     }
 }

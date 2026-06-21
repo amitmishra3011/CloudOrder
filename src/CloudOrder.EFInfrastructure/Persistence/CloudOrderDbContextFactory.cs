@@ -12,7 +12,7 @@ namespace CloudOrder.EFInfrastructure.Persistence
              Directory.GetCurrentDirectory(),
              "../CloudOrder.RestApi");
 
-            var configuration = new ConfigurationBuilder()
+            IConfigurationRoot? configuration = new ConfigurationBuilder()
                 .SetBasePath(path)
                 .AddJsonFile(
                     "appsettings.json",
@@ -20,7 +20,7 @@ namespace CloudOrder.EFInfrastructure.Persistence
                 .Build();
 
 
-            var connectionString =
+            string? connectionString =
                 configuration.GetConnectionString(
                     "DefaultConnection");
 
