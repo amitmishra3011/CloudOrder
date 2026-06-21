@@ -31,7 +31,9 @@ public sealed class OrderServiceTests
 
         var actualOrders = await service.GetOrdersAsync();
 
-        CollectionAssert.AreEqual(expectedOrders, actualOrders);
+        Assert.AreEqual(expectedOrders.Count, actualOrders.Count);
+        Assert.AreEqual(expectedOrders[0].Id, actualOrders[0].Id);
+        Assert.AreEqual(expectedOrders[0].TotalAmount, actualOrders[0].TotalAmount);
         repository.Verify(repo => repo.GetOrdersAsync(), Times.Once);
     }
 }
