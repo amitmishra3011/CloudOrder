@@ -1,6 +1,11 @@
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using CloudOrder.Entities.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace CloudOrder.RestApi.ExceptionHandling
 {
@@ -12,7 +17,7 @@ namespace CloudOrder.RestApi.ExceptionHandling
             _logger = logger;
         }
 
-        public async Task<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
+        public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
             _logger.LogError(exception, "An unhandled exception occurred.");
 
@@ -42,7 +47,5 @@ namespace CloudOrder.RestApi.ExceptionHandling
             await httpContext.Response.WriteAsJsonAsync(problem, cancellationToken);
             return true;
         }
-
-        // Removed duplicate unimplemented overload. The async implementation above is the correct handler.
     }
 }
