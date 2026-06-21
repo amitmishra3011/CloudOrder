@@ -1,4 +1,5 @@
 using CloudOrder.Business;
+using CloudOrder.Business.DTOs.Orders;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -25,6 +26,12 @@ namespace CloudOrder.RestApi.Controllers
             var order = await _orderService.GetOrderAysnc(id);
             return Ok(order);
 
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateOrder([FromBody] CreateOrderRequest request)
+        {
+            var created = await _orderService.CreateOrderAsync(request);
+            return CreatedAtAction(nameof(GetOrder), new { id = created.Id }, created);
         }
     }
 }
