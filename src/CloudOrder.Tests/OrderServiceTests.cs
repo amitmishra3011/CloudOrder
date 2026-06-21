@@ -1,4 +1,3 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +7,7 @@ using CloudOrder.Business.DTOs.Orders;
 using CloudOrder.Business.Repositories;
 using CloudOrder.Entities.Entities;
 using CloudOrder.Entities.Exceptions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
 namespace CloudOrder.Tests
@@ -43,7 +43,7 @@ namespace CloudOrder.Tests
 
             var actual = await service.GetOrdersAsync();
 
-            Assert.AreEqual(expectedDtos.Count, actual.Count);
+            Assert.HasCount(expectedDtos.Count, actual);
             for (int i = 0; i < expectedDtos.Count; i++)
             {
                 Assert.AreEqual(expectedDtos[i].Id, actual[i].Id);
@@ -88,7 +88,7 @@ namespace CloudOrder.Tests
 
             Assert.IsNotNull(result);
             Assert.AreEqual(20m, result.TotalAmount);
-            Assert.AreEqual(1, result.Items.Count);
+            Assert.HasCount(1, result.Items);
             Assert.AreEqual(product.Name, result.Items[0].ProductName);
             Assert.AreEqual(2, result.Items[0].Quantity);
             Assert.AreEqual(10m, result.Items[0].UnitPrice);
