@@ -23,11 +23,12 @@ public class OrderService : IOrderService
 
     }
 
-    public async Task<OrderResponseDto> GetOrderAysnc(Guid orderId)
+    public async Task<OrderResponseDto> GetOrderAsync(Guid orderId)
     {
         var result = await _orderRepository.GetOrderByIdAsync(orderId);
         return result.ToDto();
     }
+
     public async Task<OrderResponseDto> CreateOrderAsync(CreateOrderRequest request)
     {
         if (request is null)

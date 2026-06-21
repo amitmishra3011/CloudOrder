@@ -23,7 +23,7 @@ namespace CloudOrder.RestApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOrder(Guid id)
         {
-            var order = await _orderService.GetOrderAysnc(id);
+            var order = await _orderService.GetOrderAsync(id);
             return Ok(order);
 
         }
