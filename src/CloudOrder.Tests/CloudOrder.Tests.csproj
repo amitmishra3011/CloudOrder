@@ -8,9 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MSTest.TestFramework" Version="4.0.2" />
-    <PackageReference Include="MSTest.TestAdapter" Version="4.0.2" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.2.0" />
+    <!-- Test infrastructure -->
+      <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
+      <PackageReference Include="MSTest.TestAdapter" Version="3.0.2" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.6.0" />
+     
+    <!-- Test helpers -->
     <PackageReference Include="Moq" Version="4.20.72" />
   </ItemGroup>
 
@@ -18,10 +21,6 @@
     <ProjectReference Include="..\CloudOrder.Business\CloudOrder.Business.csproj" />
     <ProjectReference Include="..\CloudOrder.EFInfrastructure\CloudOrder.EFInfrastructure.csproj" />
     <ProjectReference Include="..\CloudOrder.Entities\CloudOrder.Entities.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <!-- keep explicit using via file attributes or add using in test files if needed -->
   </ItemGroup>
 
 </Project>

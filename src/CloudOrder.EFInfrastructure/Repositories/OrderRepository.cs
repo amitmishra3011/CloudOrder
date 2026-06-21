@@ -25,5 +25,24 @@ namespace CloudOrder.EFInfrastructure.Repositories
             return (await _context.Orders.FindAsync(orderId))
                    ?? throw new NotFoundException($"Order {orderId} not found.");// C#
         }
+
+        public async Task<Order> AddOrderAsync(Order order)
+        {
+            _context.Orders.Add(order);
+            await _context.SaveChangesAsync();
+            return order;
+        }
+
+        public async Task<List<Product>> GetProductsByIdsAsync(IEnumerable<Guid> productIds)
+        {
+            return await _context.Products
+                .Where(p => productIds.Contains(p.Id))
+                .ToListAsync();
+        }
+
+        public async Task<bool> CustomerExistsAsync(Guid customerId)
+        {
+            return await _context.Customers.AnyAsync(c => c.Id == customerId);
+        }
     }
 }
