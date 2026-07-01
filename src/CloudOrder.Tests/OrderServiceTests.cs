@@ -58,7 +58,7 @@ namespace CloudOrder.Tests
 
             var actual = await service.GetOrdersAsync();
 
-            Assert.HasCount(expectedDtos.Count, actual);
+            Assert.AreEqual(expectedDtos.Count, actual.Count);
             for (int i = 0; i < expectedDtos.Count; i++)
             {
                 Assert.AreEqual(expectedDtos[i].Id, actual[i].Id);
@@ -103,7 +103,7 @@ namespace CloudOrder.Tests
 
             Assert.IsNotNull(result);
             Assert.AreEqual(20m, result.TotalAmount);
-            Assert.HasCount(1, result.Items);
+            Assert.AreEqual(1, result.Items.Count);
             Assert.AreEqual(product.Name, result.Items[0].ProductName);
             Assert.AreEqual(2, result.Items[0].Quantity);
             Assert.AreEqual(10m, result.Items[0].UnitPrice);

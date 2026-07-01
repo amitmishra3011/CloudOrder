@@ -25,8 +25,4 @@
     <ProjectReference Include="..\CloudOrder.Entities\CloudOrder.Entities.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <!-- keep explicit using via file attributes or add using in test files if needed -->
-  </ItemGroup>
-
 </Project>
