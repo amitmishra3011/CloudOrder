@@ -8,6 +8,10 @@
     <ProjectReference Include="..\CloudOrder.Entities\CloudOrder.Entities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Validators\" />
+  </ItemGroup>
+
   <PropertyGroup>
 	  <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>

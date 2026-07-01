@@ -1,11 +1,12 @@
 using AutoMapper;
 using CloudOrder.Business.DTOs.Orders;
+using CloudOrder.Business.Interfaces;
 using CloudOrder.Business.Repositories;
 using CloudOrder.Entities.Entities;
 using CloudOrder.Entities.Exceptions;
 
 
-namespace CloudOrder.Business;
+namespace CloudOrder.Business.Services;
 
 public class OrderService : IOrderService
 {

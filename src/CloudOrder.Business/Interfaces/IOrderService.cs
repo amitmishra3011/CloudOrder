@@ -1,6 +1,6 @@
 using CloudOrder.Business.DTOs.Orders;
 
-namespace CloudOrder.Business
+namespace CloudOrder.Business.Interfaces
 {
     public interface IOrderService
     {
