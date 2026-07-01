@@ -46,3 +46,54 @@ dotnet_style_prefer_inferred_anonymous_type_member_names = true:silent
 dotnet_diagnostic.CA2007.severity = none
 dotnet_diagnostic.CA1707.severity = none
 dotnet_diagnostic.IDE0055.severity = suggestion
+
+#################################################
+# Code Quality Rules
+#################################################
+
+# Possible null reference
+dotnet_diagnostic.CS8602.severity = warning
+
+# Dispose objects properly
+dotnet_diagnostic.CA2000.severity = warning
+
+# Prefer readonly fields
+dotnet_diagnostic.IDE0044.severity = warning
+
+# Remove unused variables
+dotnet_diagnostic.IDE0059.severity = warning
+
+# Avoid empty catch(Exception)
+dotnet_diagnostic.CA1031.severity = warning
+
+# Avoid public fields
+dotnet_diagnostic.CA1051.severity = warning
+
+# Avoid async methods without await
+dotnet_diagnostic.CS1998.severity = warning
+
+# Use ConfigureAwait
+dotnet_diagnostic.CA2007.severity = suggestion
+
+# Unused private members
+dotnet_diagnostic.CA1823.severity = warning
+
+# Prefer collection expressions (.NET 8)
+dotnet_diagnostic.IDE0300.severity = suggestion
+
+#################################################
+# Naming Rules
+#################################################
+
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+
+dotnet_naming_style.underscore_prefix.required_prefix = _
+dotnet_naming_style.underscore_prefix.capitalization = camel_case
+
+dotnet_naming_rule.private_fields_must_have_underscore.symbols = private_fields
+dotnet_naming_rule.private_fields_must_have_underscore.style = underscore_prefix
+dotnet_naming_rule.private_fields_must_have_underscore.severity = warning
+
+dotnet_diagnostic.VSTHRD100.severity = warning
+dotnet_diagnostic.VSTHRD200.severity = warning
