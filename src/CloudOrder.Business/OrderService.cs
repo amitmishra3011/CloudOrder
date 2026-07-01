@@ -39,8 +39,9 @@ public class OrderService : IOrderService
 
         // Verify customer exists
         var customerExists = await _orderRepository.CustomerExistsAsync(request.CustomerId);
-        if (customerExists)
-            throw new NotFoundException($"Customer {request.CustomerId} already exist.");
+        if (!customerExists)
+            throw new NotFoundException(
+                $"Customer {request.CustomerId} does not exist.");
 
         if (request.Items == null || !request.Items.Any())
             throw new BusinessException("Order must contain at least one item.");
