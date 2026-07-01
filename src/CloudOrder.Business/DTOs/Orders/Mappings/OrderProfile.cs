@@ -1,0 +1,36 @@
+using AutoMapper;
+using CloudOrder.Entities.Entities;
+
+namespace CloudOrder.Business.DTOs.Orders.Mappings;
+
+public class OrderProfile : Profile
+{
+    public OrderProfile()
+    {
+        //request->entity
+        CreateMap<CreateOrderRequest, Order>()
+            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items))
+            .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
+            .ForMember(dest => dest.TotalAmount, opt => opt.Ignore())
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.Customer, opt => opt.Ignore());
+
+
+        CreateMap<CreateOrderItemRequest, OrderItem>()
+            .ForMember(d => d.Id, o => o.Ignore())
+            .ForMember(d => d.OrderId, o => o.Ignore())
+            .ForMember(d => d.Order, o => o.Ignore())
+            .ForMember(d => d.Product, o => o.Ignore())
+            .ForMember(d => d.UnitPrice, o => o.Ignore());
+
+        //entity->response
+        CreateMap<Order, OrderResponseDto>()
+            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items));
+
+        CreateMap<OrderItem, OrderItemResponseDto>()
+            .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.Name));
+
+
+
+    }
+}

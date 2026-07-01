@@ -1,13 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Configuration;
+using AutoMapper;
 using CloudOrder.Business;
 using CloudOrder.Business.DTOs.Orders;
+using CloudOrder.Business.DTOs.Orders.Mappings;
 using CloudOrder.Business.Repositories;
 using CloudOrder.Entities.Entities;
 using CloudOrder.Entities.Exceptions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 
 namespace CloudOrder.Tests
@@ -15,6 +14,23 @@ namespace CloudOrder.Tests
     [TestClass]
     public sealed class OrderServiceTests
     {
+        private IMapper _mapper;
+        private Mock<IOrderRepository> _orderRepositoryMock;
+
+        [TestInitialize]
+        public void Setup()
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<OrderProfile>();
+            }, NullLoggerFactory.Instance);
+
+            config.AssertConfigurationIsValid();
+
+            _mapper = config.CreateMapper();
+            _orderRepositoryMock = new Mock<IOrderRepository>();
+        }
+
         [TestMethod]
         public async Task GetOrdersAsync_ReturnsOrdersFromRepository()
         {
@@ -32,14 +48,13 @@ namespace CloudOrder.Tests
             var expectedDtos = repoOrders.Select(o => new OrderResponseDto
             {
                 Id = o.Id,
-                OrderDate = o.CreatedDate,
+                CreatedDate = o.CreatedDate,
                 TotalAmount = o.TotalAmount
             }).ToList();
 
-            var repository = new Mock<IOrderRepository>();
-            repository.Setup(r => r.GetOrdersAsync()).ReturnsAsync(repoOrders);
+            _orderRepositoryMock.Setup(r => r.GetOrdersAsync()).ReturnsAsync(repoOrders);
 
-            var service = new OrderService(repository.Object);
+            var service = new OrderService(_orderRepositoryMock.Object, _mapper);
 
             var actual = await service.GetOrdersAsync();
 
@@ -48,10 +63,10 @@ namespace CloudOrder.Tests
             {
                 Assert.AreEqual(expectedDtos[i].Id, actual[i].Id);
                 Assert.AreEqual(expectedDtos[i].TotalAmount, actual[i].TotalAmount);
-                Assert.AreEqual(expectedDtos[i].OrderDate, actual[i].OrderDate);
+                Assert.AreEqual(expectedDtos[i].CreatedDate, actual[i].CreatedDate);
             }
 
-            repository.Verify(r => r.GetOrdersAsync(), Times.Once);
+            _orderRepositoryMock.Verify(r => r.GetOrdersAsync(), Times.Once);
         }
 
         [TestMethod]
@@ -82,7 +97,7 @@ namespace CloudOrder.Tests
                 .Setup(r => r.AddOrderAsync(It.IsAny<Order>()))
                 .ReturnsAsync((Order o) => o);
 
-            var service = new OrderService(repository.Object);
+            var service = new OrderService(repository.Object, _mapper);
 
             var result = await service.CreateOrderAsync(request);
 
@@ -101,7 +116,7 @@ namespace CloudOrder.Tests
         public async Task CreateOrderAsync_NullRequest_ThrowsBusinessException()
         {
             var repository = new Mock<IOrderRepository>();
-            var service = new OrderService(repository.Object);
+            var service = new OrderService(repository.Object, _mapper);
 
             try
             {
@@ -137,7 +152,7 @@ namespace CloudOrder.Tests
                 .Setup(r => r.GetProductsByIdsAsync(It.IsAny<IEnumerable<Guid>>()))
                 .ReturnsAsync(new List<Product>());
 
-            var service = new OrderService(repository.Object);
+            var service = new OrderService(repository.Object, _mapper);
 
             try
             {
@@ -164,7 +179,7 @@ namespace CloudOrder.Tests
             var repository = new Mock<IOrderRepository>();
             repository.Setup(r => r.CustomerExistsAsync(customerId)).ReturnsAsync(true);
 
-            var service = new OrderService(repository.Object);
+            var service = new OrderService(repository.Object, _mapper);
 
             try
             {
@@ -195,7 +210,7 @@ namespace CloudOrder.Tests
             var repository = new Mock<IOrderRepository>();
             repository.Setup(r => r.CustomerExistsAsync(customerId)).ReturnsAsync(true);
 
-            var service = new OrderService(repository.Object);
+            var service = new OrderService(repository.Object, _mapper);
 
             try
             {
@@ -226,7 +241,7 @@ namespace CloudOrder.Tests
             var repository = new Mock<IOrderRepository>();
             repository.Setup(r => r.CustomerExistsAsync(customerId)).ReturnsAsync(false);
 
-            var service = new OrderService(repository.Object);
+            var service = new OrderService(repository.Object, _mapper);
 
             try
             {
