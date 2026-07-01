@@ -12,6 +12,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCloudOrderEFInfrastructure(builder.Configuration);
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddMaps(AppDomain.CurrentDomain.GetAssemblies());
+});
+
 builder.Services
     .AddControllers()
     .AddApplicationPart(typeof(OrdersController).Assembly);
