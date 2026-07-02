@@ -1,5 +1,3 @@
-using System;
-
 namespace CloudOrder.Entities.Entities
 {
     public class Order
