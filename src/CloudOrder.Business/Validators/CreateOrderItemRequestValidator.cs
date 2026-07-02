@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace CloudOrder.Business.Validators;
 
-public sealed class CreateOrderItemRequestValidator : AbstractValidator<CreateOrderItemRequest>
+public sealed class CreateOrderItemRequestValidator : AbstractValidator<CreateOrderItemRequestDto>
 {
     public CreateOrderItemRequestValidator()
     {

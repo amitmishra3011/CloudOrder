@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CloudOrder.Business.DTOs.Orders;
 
-public class CreateOrderItemRequest
+public class CreateOrderItemRequestDto
 {
     public Guid ProductId { get; set; }
 

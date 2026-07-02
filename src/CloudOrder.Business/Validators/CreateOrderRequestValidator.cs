@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace CloudOrder.Business.Validators;
 
-public sealed class CreateOrderRequestValidator : AbstractValidator<CreateOrderRequest>
+public sealed class CreateOrderRequestValidator : AbstractValidator<CreateOrderRequestDto>
 {
     public CreateOrderRequestValidator()
     {
@@ -18,8 +18,7 @@ public sealed class CreateOrderRequestValidator : AbstractValidator<CreateOrderR
             .WithMessage("Order must contain at least one item.");
 
         // Validate each item in the Items collection using the CreateOrderItemRequestValidator
-        IValidator<CreateOrderItemRequest> itemValidator = new CreateOrderItemRequestValidator();
         RuleForEach(x => x.Items)
-            .SetValidator(itemValidator);
+    .SetValidator(new CreateOrderItemRequestValidator());
     }
 }
