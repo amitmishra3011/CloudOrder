@@ -18,7 +18,8 @@ public sealed class CreateOrderRequestValidator : AbstractValidator<CreateOrderR
             .WithMessage("Order must contain at least one item.");
 
         // Validate each item in the Items collection using the CreateOrderItemRequestValidator
+        IValidator<CreateOrderItemRequest> itemValidator = new CreateOrderItemRequestValidator();
         RuleForEach(x => x.Items)
-            .SetValidator(new CreateOrderItemRequestValidator());
+            .SetValidator(itemValidator);
     }
 }
