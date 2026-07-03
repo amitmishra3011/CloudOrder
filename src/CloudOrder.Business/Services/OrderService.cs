@@ -30,25 +30,13 @@ public class OrderService : IOrderService
         return _mapper.Map<OrderResponseDto>(result);
     }
 
-    public async Task<OrderResponseDto> CreateOrderAsync(CreateOrderRequest request)
+    public async Task<OrderResponseDto> CreateOrderAsync(CreateOrderRequestDto request)
     {
-        if (request is null)
-            throw new BusinessException("Request cannot be null.");
-
-        if (request.CustomerId == Guid.Empty)
-            throw new BusinessException("CustomerId is required.");
-
         // Verify customer exists
         var customerExists = await _orderRepository.CustomerExistsAsync(request.CustomerId);
         if (!customerExists)
             throw new NotFoundException(
                 $"Customer {request.CustomerId} does not exist.");
-
-        if (request.Items == null || !request.Items.Any())
-            throw new BusinessException("Order must contain at least one item.");
-
-        if (request.Items.Any(i => i.Quantity <= 0))
-            throw new BusinessException("All items must have quantity greater than zero.");
 
         // Fetch products to resolve unit prices
         var productIds = request.Items.Select(i => i.ProductId).Distinct();
@@ -56,7 +44,7 @@ public class OrderService : IOrderService
         var productLookup = products.ToDictionary(p => p.Id);
         var foundIds = products.Select(p => p.Id).ToHashSet();
         var missing = productIds.Where(id => !foundIds.Contains(id)).ToList();
-        if (missing.Any())
+        if (missing.Count() == 0)
             throw new BusinessException($"Products not found: {string.Join(',', missing)}");
 
         var order = _mapper.Map<Order>(request);

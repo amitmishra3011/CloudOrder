@@ -1,7 +1,8 @@
 using AutoMapper;
+using CloudOrder.Business.DTOs.Orders;
 using CloudOrder.Entities.Entities;
 
-namespace CloudOrder.Business.DTOs.Orders.Mappings;
+namespace CloudOrder.Business.Mappings;
 
 public class OrderProfile : Profile
 {

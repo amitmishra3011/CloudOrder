@@ -4,6 +4,7 @@ using CloudOrder.EFInfrastructure;
 using CloudOrder.EFInfrastructure.Persistence;
 using CloudOrder.RestApi.Controllers;
 using CloudOrder.RestApi.ExceptionHandling;
+using CloudOrder.RestApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCloudOrderEFInfrastructure(builder.Configuration);
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddValidationExtensions();
 builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddMaps(AppDomain.CurrentDomain.GetAssemblies());
