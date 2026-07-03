@@ -1,47 +1,62 @@
 using CloudOrder.Business.Repositories;
 using CloudOrder.EFInfrastructure.Persistence;
 using CloudOrder.Entities.Entities;
-using CloudOrder.Entities.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace CloudOrder.EFInfrastructure.Repositories
 {
-    public class OrderRepository : IOrderRepository
+    public class OrderRepository: Repository<Order>, IOrderRepository
     {
-        private readonly CloudOrderDbContext _context;
-        public OrderRepository(CloudOrderDbContext context)
+        public OrderRepository(CloudOrderDbContext context) : base(context)
         {
-            _context = context;
         }
 
-        public async Task<List<Order>> GetOrdersAsync()
+        public async override Task<List<Order>> GetAllAsync()
         {
-            return await _context.Orders.ToListAsync();
-        }
-        public async Task<Order> GetOrderByIdAsync(Guid orderId)
-        {
-            // C#
-            return (await _context.Orders.FindAsync(orderId))
-                   ?? throw new NotFoundException($"Order {orderId} not found.");// C#
-        }
-
-        public async Task<Order> AddOrderAsync(Order order)
-        {
-            _context.Orders.Add(order);
-            await _context.SaveChangesAsync();
-            return order;
-        }
-
-        public async Task<List<Product>> GetProductsByIdsAsync(IEnumerable<Guid> productIds)
-        {
-            return await _context.Products
-                .Where(p => productIds.Contains(p.Id))
+            return await _dbContext.Orders
+                .Include(o => o.Customer)
+                .Include(o => o.Items)
+                .ThenInclude(oi => oi.Product)
                 .ToListAsync();
+        }
+
+        public async override Task<Order> GetByIdAsync(Guid id)
+        {
+#pragma warning disable CS8603 // Possible null reference return.
+            return await _dbContext.Orders
+                .Include(o => o.Customer)
+                .Include(o => o.Items)
+                .ThenInclude(oi => oi.Product)
+                .FirstOrDefaultAsync(o => o.Id == id).ConfigureAwait(false);
+#pragma warning restore CS8603 // Possible null reference return.
+        }
+
+        public async new Task<Order> AddAsync(Order entity)
+        {
+            return await base.AddAsync(entity);
         }
 
         public async Task<bool> CustomerExistsAsync(Guid customerId)
         {
-            return await _context.Customers.AnyAsync(c => c.Id == customerId);
+            return await _dbContext.Customers.AnyAsync(c => c.Id == customerId);
+        }
+
+        public async Task<List<Product>> GetProductsByIdsAsync(
+        IEnumerable<Guid> productIds)
+        {
+            return await _dbContext.Products
+                .Where(p => productIds.Contains(p.Id))
+                .ToListAsync();
+        }
+
+        public async Task UpdateAsync(Order entity)
+        {
+            await base.UpdateAsync(entity);
+        }
+
+        public async Task DeleteAsync(Guid id)
+        {
+            await base.DeleteAsync(id);
         }
     }
 }

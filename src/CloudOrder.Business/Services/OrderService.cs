@@ -19,13 +19,13 @@ public class OrderService : IOrderService
     }
     public async Task<List<OrderResponseDto>> GetOrdersAsync()
     {
-        var result = await _orderRepository.GetOrdersAsync();
+        var result = await _orderRepository.GetAllAsync();
         return _mapper.Map<List<OrderResponseDto>>(result);
     }
 
     public async Task<OrderResponseDto> GetOrderAsync(Guid orderId)
     {
-        var result = await _orderRepository.GetOrderByIdAsync(orderId);
+        var result = await _orderRepository.GetByIdAsync(orderId);
         // how to use orderprofile for mapping here
         return _mapper.Map<OrderResponseDto>(result);
     }
@@ -59,7 +59,7 @@ public class OrderService : IOrderService
 
         order.TotalAmount = order.Items.Sum(x => x.UnitPrice * x.Quantity);
 
-        var saved = await _orderRepository.AddOrderAsync(order);
+        var saved = await _orderRepository.AddAsync(order);
 
         return _mapper.Map<OrderResponseDto>(saved);
     }
