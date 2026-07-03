@@ -56,7 +56,7 @@ namespace CloudOrder.Tests
             };
 
             _orderRepositoryMock
-                .Setup(r => r.GetOrdersAsync())
+                .Setup(r => r.GetAllAsync())
                 .ReturnsAsync(orders);
 
             // Act
@@ -68,7 +68,7 @@ namespace CloudOrder.Tests
             Assert.AreEqual(100m, result[0].TotalAmount);
 
             _orderRepositoryMock.Verify(
-                r => r.GetOrdersAsync(),
+                r => r.GetAllAsync(),
                 Times.Once);
         }
 
@@ -91,7 +91,7 @@ namespace CloudOrder.Tests
             };
 
             _orderRepositoryMock
-                .Setup(r => r.GetOrderByIdAsync(orderId))
+                .Setup(r => r.GetByIdAsync(orderId))
                 .ReturnsAsync(order);
 
             // Act
@@ -103,7 +103,7 @@ namespace CloudOrder.Tests
             Assert.AreEqual("Mac", result.CustomerName);
 
             _orderRepositoryMock.Verify(
-                r => r.GetOrderByIdAsync(orderId),
+                r => r.GetByIdAsync(orderId),
                 Times.Once);
         }
 

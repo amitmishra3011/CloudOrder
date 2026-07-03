@@ -4,6 +4,7 @@ using CloudOrder.EFInfrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CloudOrder.EFInfrastructure.Migrations
 {
     [DbContext(typeof(CloudOrderDbContext))]
-    partial class CloudOrderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260703173837_AddCustomerAddress")]
+    partial class AddCustomerAddress
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
