@@ -19,6 +19,6 @@ public sealed class CreateOrderRequestValidator : AbstractValidator<CreateOrderR
 
         // Validate each item in the Items collection using the CreateOrderItemRequestValidator
         RuleForEach(x => x.Items)
-    .SetValidator(new CreateOrderItemRequestValidator());
+            .SetValidator((IValidator<CreateOrderItemRequestDto>)new CreateOrderItemRequestValidator());
     }
 }
