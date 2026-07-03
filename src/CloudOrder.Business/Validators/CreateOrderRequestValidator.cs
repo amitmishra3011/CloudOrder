@@ -19,6 +19,15 @@ public sealed class CreateOrderRequestValidator : AbstractValidator<CreateOrderR
 
         // Validate each item in the Items collection using the CreateOrderItemRequestValidator
         RuleForEach(x => x.Items)
-            .SetValidator((IValidator<CreateOrderItemRequestDto>)new CreateOrderItemRequestValidator());
+            .ChildRules(item =>
+            {
+                item.RuleFor(x => x.ProductId)
+                    .NotEmpty()
+                    .WithMessage("ProductId is required.");
+
+                item.RuleFor(x => x.Quantity)
+                    .GreaterThan(0)
+                    .WithMessage("Quantity must be greater than zero.");
+            });
     }
 }
