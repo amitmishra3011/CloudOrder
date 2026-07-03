@@ -1,6 +1,6 @@
+using CloudOrder.Entities.Entities;
 using System;
 using System.Collections.Generic;
-using CloudOrder.Entities.Entities;
 
 namespace CloudOrder.Business.Repositories;
 

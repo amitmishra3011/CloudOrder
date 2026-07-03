@@ -6,6 +6,6 @@ namespace CloudOrder.Business.Interfaces
     {
         Task<List<OrderResponseDto>> GetOrdersAsync();
         Task<OrderResponseDto> GetOrderAsync(Guid orderId);
-        Task<OrderResponseDto> CreateOrderAsync(CreateOrderRequest request);
+        Task<OrderResponseDto> CreateOrderAsync(CreateOrderRequestDto request);
     }
 }

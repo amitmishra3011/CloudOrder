@@ -28,7 +28,7 @@ namespace CloudOrder.RestApi.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult> CreateOrder([FromBody] CreateOrderRequest request)
+        public async Task<IActionResult> CreateOrder([FromBody] CreateOrderRequestDto request)
         {
             var created = await _orderService.CreateOrderAsync(request);
             return CreatedAtAction(nameof(GetOrder), new { id = created.Id }, created);

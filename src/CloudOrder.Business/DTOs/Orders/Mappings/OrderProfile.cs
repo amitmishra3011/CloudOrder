@@ -8,7 +8,7 @@ public class OrderProfile : Profile
     public OrderProfile()
     {
         //request->entity
-        CreateMap<CreateOrderRequest, Order>()
+        CreateMap<CreateOrderRequestDto, Order>()
             .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items))
             .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
             .ForMember(dest => dest.TotalAmount, opt => opt.Ignore())
@@ -16,7 +16,7 @@ public class OrderProfile : Profile
             .ForMember(dest => dest.Customer, opt => opt.Ignore());
 
 
-        CreateMap<CreateOrderItemRequest, OrderItem>()
+        CreateMap<CreateOrderItemRequestDto, OrderItem>()
             .ForMember(d => d.Id, o => o.Ignore())
             .ForMember(d => d.OrderId, o => o.Ignore())
             .ForMember(d => d.Order, o => o.Ignore())
