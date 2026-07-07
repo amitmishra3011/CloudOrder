@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CloudOrder.EFInfrastructure.Repositories
 {
-    public class OrderRepository: Repository<Order>, IOrderRepository
+    public class OrderRepository : Repository<Order>, IOrderRepository
     {
         public OrderRepository(CloudOrderDbContext context) : base(context)
         {
@@ -34,11 +34,6 @@ namespace CloudOrder.EFInfrastructure.Repositories
         public async new Task<Order> AddAsync(Order entity)
         {
             return await base.AddAsync(entity);
-        }
-
-        public async Task<bool> CustomerExistsAsync(Guid customerId)
-        {
-            return await _dbContext.Customers.AnyAsync(c => c.Id == customerId);
         }
 
         public async Task<List<Product>> GetProductsByIdsAsync(

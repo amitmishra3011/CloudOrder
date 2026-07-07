@@ -23,8 +23,8 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 
     public async virtual Task DeleteAsync(Guid id)
     {
-        var entity= await GetByIdAsync(id);
-        if(entity is not null)
+        var entity = await GetByIdAsync(id);
+        if (entity is not null)
         {
             _dbSet.Remove(entity);
         }
@@ -47,5 +47,5 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
         await Task.CompletedTask;
     }
 
-   
+
 }

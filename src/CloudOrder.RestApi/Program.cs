@@ -4,17 +4,17 @@ using CloudOrder.EFInfrastructure;
 using CloudOrder.EFInfrastructure.Persistence;
 using CloudOrder.RestApi.Controllers;
 using CloudOrder.RestApi.ExceptionHandling;
-using CloudOrder.RestApi.Extensions;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddOpenApi();
 builder.Services.AddCloudOrderEFInfrastructure(builder.Configuration);
 builder.Services.AddScoped<IOrderService, OrderService>();
-builder.Services.AddValidationExtensions();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddMaps(AppDomain.CurrentDomain.GetAssemblies());
@@ -38,8 +38,8 @@ using (var scope = app.Services.CreateScope())
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 app.MapControllers();
