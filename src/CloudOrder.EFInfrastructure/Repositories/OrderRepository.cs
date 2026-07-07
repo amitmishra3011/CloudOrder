@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CloudOrder.EFInfrastructure.Repositories
 {
-    public class OrderRepository: Repository<Order>, IOrderRepository
+    public class OrderRepository : Repository<Order>, IOrderRepository
     {
         public OrderRepository(CloudOrderDbContext context) : base(context)
         {

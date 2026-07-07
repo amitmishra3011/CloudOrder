@@ -10,7 +10,7 @@ public class CustomerService : ICustomerService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-    public CustomerService(IUnitOfWork  unitOfWork, IMapper mapper)
+    public CustomerService(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;

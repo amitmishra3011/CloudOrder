@@ -4,11 +4,11 @@ using CloudOrder.Entities.Entities;
 
 namespace CloudOrder.EFInfrastructure.Repositories;
 
-public class CustomerRepository: Repository<Customer>, ICustomerRepository
+public class CustomerRepository : Repository<Customer>, ICustomerRepository
 {
     public CustomerRepository(CloudOrderDbContext context) : base(context)
     {
-        
+
     }
     public async override Task<Customer> AddAsync(Customer entity)
     {

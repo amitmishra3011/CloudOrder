@@ -1,15 +1,15 @@
 using AutoMapper;
 using CloudOrder.Business.DTOs.Orders;
 using CloudOrder.Business.Interfaces;
+using CloudOrder.Business.UnitOfWork;
 using CloudOrder.Entities.Entities;
 using CloudOrder.Entities.Exceptions;
-using CloudOrder.Business.UnitOfWork;
 
 
 namespace CloudOrder.Business.Services;
 
 public class OrderService : IOrderService
-{   
+{
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     public OrderService(IUnitOfWork unitOfWork, IMapper mapper)
