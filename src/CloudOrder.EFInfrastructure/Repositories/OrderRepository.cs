@@ -36,11 +36,6 @@ namespace CloudOrder.EFInfrastructure.Repositories
             return await base.AddAsync(entity);
         }
 
-        public async Task<bool> CustomerExistsAsync(Guid customerId)
-        {
-            return await _dbContext.Customers.AnyAsync(c => c.Id == customerId);
-        }
-
         public async Task<List<Product>> GetProductsByIdsAsync(
         IEnumerable<Guid> productIds)
         {

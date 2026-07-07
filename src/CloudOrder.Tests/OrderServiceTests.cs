@@ -1,8 +1,8 @@
 using AutoMapper;
 using CloudOrder.Business.DTOs.Orders;
 using CloudOrder.Business.DTOs.Orders.Mappings;
-using CloudOrder.Business.Repositories;
 using CloudOrder.Business.Services;
+using CloudOrder.Business.UnitOfWork;
 using CloudOrder.Entities.Entities;
 using CloudOrder.Entities.Exceptions;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -13,7 +13,7 @@ namespace CloudOrder.Tests
     [TestClass]
     public sealed class OrderServiceTests
     {
-        private Mock<IOrderRepository> _orderRepositoryMock = null!;
+        private Mock<IUnitOfWork> _unitOfWorkMock = null!;
         private IMapper _mapper = null!;
         private OrderService _service = null!;
 
@@ -29,10 +29,10 @@ namespace CloudOrder.Tests
 
             _mapper = config.CreateMapper();
 
-            _orderRepositoryMock = new Mock<IOrderRepository>();
+            _unitOfWorkMock = new Mock<IUnitOfWork>();
 
             _service = new OrderService(
-                _orderRepositoryMock.Object,
+                _unitOfWorkMock.Object,
                 _mapper);
         }
 
@@ -55,8 +55,8 @@ namespace CloudOrder.Tests
                 }
             };
 
-            _orderRepositoryMock
-                .Setup(r => r.GetAllAsync())
+            _unitOfWorkMock
+                .Setup(u => u.Orders.GetAllAsync())
                 .ReturnsAsync(orders);
 
             // Act
@@ -67,8 +67,8 @@ namespace CloudOrder.Tests
             Assert.AreEqual("John", result[0].CustomerName);
             Assert.AreEqual(100m, result[0].TotalAmount);
 
-            _orderRepositoryMock.Verify(
-                r => r.GetAllAsync(),
+            _unitOfWorkMock.Verify(
+                u => u.Orders.GetAllAsync(),
                 Times.Once);
         }
 
@@ -90,8 +90,8 @@ namespace CloudOrder.Tests
                 Items = new List<OrderItem>()
             };
 
-            _orderRepositoryMock
-                .Setup(r => r.GetByIdAsync(orderId))
+            _unitOfWorkMock
+                .Setup(u => u.Orders.GetByIdAsync(orderId))
                 .ReturnsAsync(order);
 
             // Act
@@ -102,13 +102,13 @@ namespace CloudOrder.Tests
             Assert.AreEqual(orderId, result.Id);
             Assert.AreEqual("Mac", result.CustomerName);
 
-            _orderRepositoryMock.Verify(
-                r => r.GetByIdAsync(orderId),
+            _unitOfWorkMock.Verify(
+                u => u.Orders.GetByIdAsync(orderId),
                 Times.Once);
         }
 
         [TestMethod]
-        public async Task CreateOrderAsync_CustomerNotFound_ThrowsNotFoundException()
+        public async Task CreateOrderAsync_OrderNotFound_ThrowsNotFoundException()
         {
             var request = new CreateOrderRequestDto
             {
@@ -123,9 +123,9 @@ namespace CloudOrder.Tests
                 ]
             };
 
-            _orderRepositoryMock
-                .Setup(r => r.CustomerExistsAsync(request.CustomerId))
-                .ReturnsAsync(false);
+            _unitOfWorkMock
+                .Setup(u => u.Customers.GetByIdAsync(request.CustomerId))
+                .ReturnsAsync((Customer)null!);
 
             await Assert.ThrowsAsync<NotFoundException>(
                 () => _service.CreateOrderAsync(request));

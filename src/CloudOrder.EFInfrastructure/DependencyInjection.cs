@@ -1,4 +1,5 @@
 using CloudOrder.Business.Repositories;
+using CloudOrder.Business.UnitOfWork;
 using CloudOrder.EFInfrastructure.Persistence;
 using CloudOrder.EFInfrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +20,9 @@ public static class DependencyInjection
                     configuration.GetConnectionString("DefaultConnection"),
                     sqlOptions => sqlOptions.EnableRetryOnFailure()));
 
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IOrderRepository, OrderRepository>();
+        services.AddScoped<ICustomerRepository, CustomerRepository>();
 
         return services;
     }

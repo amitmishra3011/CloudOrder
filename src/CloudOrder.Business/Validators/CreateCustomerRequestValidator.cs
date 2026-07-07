@@ -16,6 +16,7 @@ public sealed class CreateCustomerRequestValidator : AbstractValidator<CreateCus
             .NotEmpty()
             .WithMessage("Email is required.")
             .EmailAddress()
+            .Matches(@"^[^@\s]+@[^@\s]+\.[^@\s]+$")
             .WithMessage("Invalid email format.");
         RuleFor(x => x.Address)
             .NotEmpty()
