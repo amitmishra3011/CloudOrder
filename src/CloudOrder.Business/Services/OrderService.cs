@@ -40,11 +40,11 @@ public class OrderService : IOrderService
 
         // Fetch products to resolve unit prices
         var productIds = request.Items.Select(i => i.ProductId).Distinct();
-        var products = await _unitOfWork.Orders.GetProductsByIdsAsync(productIds);
+        var products = await _unitOfWork.Products.GetAllAsync();
         var productLookup = products.ToDictionary(p => p.Id);
         var foundIds = products.Select(p => p.Id).ToHashSet();
         var missing = productIds.Where(id => !foundIds.Contains(id)).ToList();
-        if (missing.Count() == 0)
+        if (missing.Any())
             throw new BusinessException($"Products not found: {string.Join(',', missing)}");
 
         var order = _mapper.Map<Order>(request);
