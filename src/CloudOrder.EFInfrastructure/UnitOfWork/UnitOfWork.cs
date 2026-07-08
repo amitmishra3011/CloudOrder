@@ -9,10 +9,11 @@ public class UnitOfWork(CloudOrderDbContext context) : IUnitOfWork
     private readonly CloudOrderDbContext _context = context;
     private ICustomerRepository? _customers;
     private IOrderRepository? _orders;
+    private IProductRepository? _products;
 
     public ICustomerRepository Customers => _customers ??= new CustomerRepository(_context);
     public IOrderRepository Orders => _orders ??= new OrderRepository(_context);
-    // public IProductRepository Products => _products ??= new ProductRepository(_context);
+    public IProductRepository Products => _products ??= new ProductRepository(_context);
 
     public async Task<int> SaveChangesAsync()
     {

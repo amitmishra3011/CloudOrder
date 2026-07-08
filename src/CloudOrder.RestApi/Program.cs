@@ -15,6 +15,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddCloudOrderEFInfrastructure(builder.Configuration);
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddMaps(AppDomain.CurrentDomain.GetAssemblies());
