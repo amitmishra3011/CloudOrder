@@ -1,8 +1,8 @@
-using CloudOrder.Entities.Entities;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CloudOrder.Entities.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CloudOrder.EFInfrastructure.Persistence
 {

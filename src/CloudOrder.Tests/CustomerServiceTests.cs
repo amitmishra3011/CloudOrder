@@ -58,7 +58,7 @@ public sealed class CustomerServiceTests
         var result = await _service.GetCustomersAsync();
 
         // Assert
-        Assert.AreEqual(1, result.Count);
+        Assert.HasCount(1, result);
         Assert.AreEqual("Alice", result[0].Name);
         Assert.AreEqual("alice@test", result[0].Email);
 

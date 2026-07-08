@@ -13,7 +13,7 @@ public sealed class ProductServiceTests
 
         // Assert
         Assert.IsNotNull(product.OrderItems);
-        Assert.AreEqual(0, product.OrderItems.Count);
+        Assert.IsEmpty(product.OrderItems);
         Assert.AreEqual(string.Empty, product.Name);
         Assert.AreEqual(0m, product.Price);
         Assert.AreEqual(Guid.Empty, product.Id);
@@ -38,8 +38,8 @@ public sealed class ProductServiceTests
         product.OrderItems.Add(orderItem);
 
         // Assert
-        Assert.AreEqual(1, product.OrderItems.Count);
-        Assert.IsTrue(product.OrderItems.Contains(orderItem));
+        Assert.HasCount(1, product.OrderItems);
+        Assert.Contains(orderItem, product.OrderItems);
         Assert.AreSame(product, orderItem.Product);
     }
 }
